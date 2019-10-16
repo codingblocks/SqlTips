@@ -1,0 +1,39 @@
+---
+version: '2'
+services:
+  sql-dev:
+    image: mcr.microsoft.com/mssql/server:2017-CU14-ubuntu
+    ports:
+      - 1500:1433
+    hostname: dev
+    container_name: sql-server
+    volumes:
+      - ./ContosoRetailDW.bak:/var/opt/mssql/data/ContosoRetailDW.bak
+      - ./backup:/var/opt/mssql/data/
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'c0dingbl0cks!'
+      MSSQL_PID: 'Developer' 
+
+  sql-stage:
+    image: mcr.microsoft.com/mssql/server:2017-CU14-ubuntu
+    ports:
+      - 1501:1433
+    hostname: stage
+    container_name: sql-stage
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'c0dingbl0cks!'
+      MSSQL_PID: 'Developer' 
+
+
+  sql-prod:
+    image: mcr.microsoft.com/mssql/server:2017-CU14-ubuntu
+    ports:
+      - 1502:1433
+    hostname: prod
+    container_name: sql-prod
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'c0dingbl0cks!'
+      MSSQL_PID: 'Developer' 
